@@ -1,0 +1,42 @@
+How to setup fresh laravel
+
+Step 1 : Install laravel using composer
+	
+	Open Terminal : >_ composer create-project laravel/laravel blog
+
+Step 2: >_  1. sudo -i 
+		 2. cd /etc/apache2/sites-available/
+		 3. cp 000-default.conf blog.conf
+		 4. copy and paste this text 
+			<VirtualHost *:80>
+				ServerName blog.co
+				ServerAdmin webmaster@localhost
+				DocumentRoot /var/www/html/gametimes/public
+				ErrorLog ${APACHE_LOG_DIR}/error.log
+				CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+				<Directory /var/www/html/gametimes>
+					Options All
+				        AllowOverride All
+					Order allow,deny
+				        Allow from all
+				</Directory>
+			</VirtualHost>
+
+		 5. Save and close.
+		 6. >_ a2ensite blog.conf
+		 7. >_ service apache2 restart
+		 8. >_ gedit cd /etc/hosts
+			
+			Register your blog.co in hosts file
+
+			Add this line : 127.0.0.1 	blog.co
+			
+		9. Go to browser and hit : http://blog.co
+
+
+Step 2: setting up .env file with database credentials
+
+Step 3: >_ php artisan migrate
+
+Step 4: Install laravel Forms & HTML package : (https://laravelcollective.com/docs/5.4/html)
