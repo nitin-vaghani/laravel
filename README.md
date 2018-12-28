@@ -333,13 +333,22 @@ run : php artisan migrate
 Note: data will be remain
 
 
+
+
+
 php artisan make:migration create_oauth_access_tokens_table --create="oauth_access_tokens"
+
+
+
 
 php artisan make:model Reports -mcr
 
+
 php artisan make:model VitalSignatureFollowUp -m
 
+
 if you run php artisan make:model --help you can see all the available options
+
 
     -m, --migration Create a new migration file for the model.
     
