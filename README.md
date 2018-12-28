@@ -91,7 +91,7 @@ Clear cache :  php artisan cache:clear
 Empty log file :  echo "" > logs/laravel.log 
 
 Create controller with resource : php artisan make:controller PeopleController --resource
-						 php artisan make:controller PhotoController --resource --model=Photo
+                                  php artisan make:controller PhotoController --resource --model=Photo
 
 
 Get route list :  php artisan route:list
@@ -162,15 +162,13 @@ Set rule :
                 0 => "image",
                 1 => "mimes:jpeg,png,jpg,gif,svg",
                 2 => "max:2024"
-//                    0 => "required",
-//                    1 => "image",
-//                    2 => "mimes:jpeg,png,jpg,gif,svg",
-//                    3 => "max:2024"
             );
         }
+	
 /************************************ Process in laravel *************************************************************/
 
 Process in Laravel:
+
 $process = new \Symfony\Component\Process\Process('/usr/bin/php ../artisan senduserlogemail:run 1 2 3 >>/dev/null 2>&1');
 $process->start();
 
@@ -204,9 +202,8 @@ class SendUserLogEmail extends Command {
 
 /*************************** END ************************************/
 
+
 Laravel Glide
-
-
 
 Route::get('/loadimage/{type}/{id}/{width}/{height}/{crop}/{name}', function($type, $id, $width, $height, $crop, $name) { 
     $server = ServerFactory::create([
@@ -251,24 +248,19 @@ MAIL_FROM_NAME=VIN
 Controller
 
 use Mail;
-
     public function test_mail() {
         error_reporting(E_ALL);
         ini_set('display_erros', 1);
         try {
             $email = array('jamesdonald446@gmail.com');
             $data = array('LjBazaar' => 'nitin');
-
             Mail::send('emails.test', $data, function ($message) use($email) {
                 $message->from('vnits108@gmail.com', 'Vin Master');
                 $message->to($email);
                 $message->subject("Miss you request test");
             });
-
             if (count(Mail::failures()) > 0) {
-
                 echo "There was one or more failures. They were: <br />";
-
                 foreach (Mail::failures as $email_address) {
                     echo " - $email_address <br />";
                 }
@@ -276,7 +268,6 @@ use Mail;
                 echo "No errors, all sent successfully!";
             }
         } catch (Exception $e) {
-
                         dd($e->getMessage());
             log_message("ERROR", $e->getMessage());
         }
@@ -317,38 +308,41 @@ View /emails/ test.blade.php
 
 #Laravel migrations
 
+
 Create new table : php artisan make:migration create_oauth_access_tokens_table --create="oauth_access_tokens"
+
 
 Update migration into database : php artisan migrate
 
+
 Refresh migration into database :  php artisan migrate:refresh
 
+
 Create a new migration using php artisan migrate:make update_users_table.
+
 
 
 Composer dump if autoload error : composer dump-autoload
 
 
+
 Add / Update migration file : php artisan make:migration update_providers_table --table=providers
+
 run : php artisan migrate
+
 Note: data will be remain
 
+
 php artisan make:migration create_oauth_access_tokens_table --create="oauth_access_tokens"
+
 php artisan make:model Reports -mcr
+
 php artisan make:model VitalSignatureFollowUp -m
-
-
 
 if you run php artisan make:model --help you can see all the available options
 
     -m, --migration Create a new migration file for the model.
-
+    
     -c, --controller Create a new controller for the model.
-
+    
     -r, --resource Indicates if the generated controller should be a resource controller
-
-
-
-
-
-
