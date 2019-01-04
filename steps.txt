@@ -2,7 +2,7 @@ How to setup fresh laravel
 
 Step 1 : Install laravel using composer
 	
-	Open Terminal : >_ composer create-project laravel/laravel blog
+	Open Terminal : >_ composer create-project --prefer-dist laravel/laravel /var/www/html/blog "5.7.*"
 
 Step 2: >_  1. sudo -i 
 		 2. cd /etc/apache2/sites-available/
@@ -39,4 +39,4 @@ Step 2: setting up .env file with database credentials
 
 Step 3: >_ php artisan migrate
 
-Step 4: Install laravel Forms & HTML package : (https://laravelcollective.com/docs/5.4/html)
+Step 4: Install laravel Forms & HTML package : (https://laravelcollective.com/docs/master/html)
