@@ -58,7 +58,7 @@ dd(\DB::getQueryLog());
 
 Truncate : 
 > php artisan tinker
-DB::table('table_LjBazaar')->truncate();
+DB::table('table_user')->truncate();
 
 
 Passport permission : sudo chown www-data:www-data storage/oauth-*.key
