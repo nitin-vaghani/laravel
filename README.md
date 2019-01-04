@@ -153,7 +153,7 @@ Get all Error message :
 @endif
 
 
-Get current route LjBazaar : http://stackoverflow.com/questions/30046691/how-to-get-current-route-name-in-laravel-5
+Get current route Name : http://stackoverflow.com/questions/30046691/how-to-get-current-route-name-in-laravel-5
 
 Set rule : 
 
@@ -234,6 +234,7 @@ MAIL_USERNAME=abc@gmail.com
 MAIL_PASSWORD=test
 MAIL_ENCRYPTION=tls
 
+
 SENDGRID CREDS:
 
 MAIL_DRIVER=smtp
@@ -252,10 +253,10 @@ use Mail;
         error_reporting(E_ALL);
         ini_set('display_erros', 1);
         try {
-            $email = array('jamesdonald446@gmail.com');
-            $data = array('LjBazaar' => 'nitin');
+            $email = array('abc@gmail.com');
+            $data = array('Abc' => 'Xyz');
             Mail::send('emails.test', $data, function ($message) use($email) {
-                $message->from('vnits108@gmail.com', 'Vin Master');
+                $message->from('bbb@gmail.com', 'Lara Master');
                 $message->to($email);
                 $message->subject("Miss you request test");
             });
@@ -296,7 +297,7 @@ View /emails/ test.blade.php
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-6 col-md-4">
-        Hi {{ $LjBazaar }},
+        Hi {{ $name }},
         Good noon
         <p>Thanks,</p>
             Vin
@@ -321,9 +322,7 @@ Refresh migration into database :  php artisan migrate:refresh
 Create a new migration using php artisan migrate:make update_users_table.
 
 
-
 Composer dump if autoload error : composer dump-autoload
-
 
 
 Add / Update migration file : php artisan make:migration update_providers_table --table=providers
@@ -333,11 +332,7 @@ run : php artisan migrate
 Note: data will be remain
 
 
-
-
-
 php artisan make:migration create_oauth_access_tokens_table --create="oauth_access_tokens"
-
 
 
 
