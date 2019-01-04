@@ -5,10 +5,11 @@ Step 1 : Install laravel using composer
 	
 	Open Terminal : >_ composer create-project --prefer-dist laravel/laravel blog "5.4.*"
 
-Step 2: >_  1. sudo -i 
-		 2. cd /etc/apache2/sites-available/
-		 3. cp 000-default.conf blog.conf
-		 4. copy and paste this text 
+Step 2: Open Terminal : >_ sudo -i 
+
+	    >_ cd /etc/apache2/sites-available/
+	    >_ cp 000-default.conf blog.conf
+	    >_ copy and paste this text 
 		 
 			<VirtualHost *:80>
 				ServerName blog.co
