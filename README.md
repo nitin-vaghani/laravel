@@ -9,6 +9,7 @@ Step 2: >_  1. sudo -i
 		 2. cd /etc/apache2/sites-available/
 		 3. cp 000-default.conf blog.conf
 		 4. copy and paste this text 
+		 
 			<VirtualHost *:80>
 				ServerName blog.co
 				ServerAdmin webmaster@localhost
@@ -58,10 +59,11 @@ dd(\DB::getQueryLog());
 
 Truncate : 
 > php artisan tinker
+
 DB::table('table_user')->truncate();
 
 
-Passport permission : sudo chown www-data:www-data storage/oauth-*.key
+Passport permission : <i> sudo chown www-data:www-data storage/oauth-*.key </i>
 
 generate migrations from database: https://github.com/Xethron/migrations-generator
 
@@ -72,8 +74,7 @@ Temp : php artisan migrate --path=database/migrations/temp
 
 Then use the table command as follows (if you're using MySQL!):
 
-Schema::table('users', function($table)
-{
+Schema::table('users', function($table){
     $table->string('phone_nr')->after('id');
 });
 
@@ -85,16 +86,16 @@ Debug bar : https://www.youtube.com/watch?v=nV6qaLXH9vU
 
 
 
-Clear cache :  php artisan cache:clear
+Clear cache :  >_ php artisan cache:clear
 
 
-Empty log file :  echo "" > logs/laravel.log 
+Empty log file :  >_ echo "" > logs/laravel.log 
 
-Create controller with resource : php artisan make:controller PeopleController --resource
-                                  php artisan make:controller PhotoController --resource --model=Photo
+Create controller with resource : >_ php artisan make:controller PeopleController --resource
+                                  >_  php artisan make:controller PhotoController --resource --model=Photo
 
 
-Get route list :  php artisan route:list
+Get route list :  >_  php artisan route:list
 
 Bind route : 
 
