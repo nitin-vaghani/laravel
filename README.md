@@ -172,9 +172,12 @@ Process in Laravel:
 $process = new \Symfony\Component\Process\Process('/usr/bin/php ../artisan senduserlogemail:run 1 2 3 >>/dev/null 2>&1');
 $process->start();
 
+
+
 /var/www/html/projectfolder/app/Console/Commands/SendUserLogEmail.php
 
-<?php
+
+<php>
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -194,11 +197,17 @@ class SendUserLogEmail extends Command {
     }
 }
 
+</php>
+
+
 /var/www/html/projectfolder/app/Console/Kernel.php
 
+<php>
   protected $commands = [
         Commands\SendUserLogEmail::class,
     ];
+
+</php>
 
 /*************************** END ************************************/
 
@@ -222,6 +231,7 @@ Route::get('/loadimage/{type}/{id}/{width}/{height}/{crop}/{name}', function($ty
     );
     exit;
 });
+
 
 #Laravel mail from local
 
