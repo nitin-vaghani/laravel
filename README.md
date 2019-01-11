@@ -14,11 +14,11 @@ Step 2: Open Terminal : >_ sudo -i
 			<VirtualHost *:80>
 				ServerName blog.co
 				ServerAdmin webmaster@localhost
-				DocumentRoot /var/www/html/gametimes/public
+				DocumentRoot /var/www/html/blog/public
 				ErrorLog ${APACHE_LOG_DIR}/error.log
 				CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-				<Directory /var/www/html/gametimes>
+				<Directory /var/www/html/blog>
 					Options All
 				        AllowOverride All
 					Order allow,deny
