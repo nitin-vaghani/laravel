@@ -34,38 +34,38 @@ copy and paste this text
 
 //Register your blog.co in hosts file
 
-//Add this line : 127.0.0.1 	blog.co
+//Add this line : 
+127.0.0.1 	blog.co
 
-//Go to browser and hit : http://blog.co
-
+//Go to browser and hit : 
+http://blog.co
 
 //setting up .env file with database credentials
 
 php artisan migrate
 
-//Install laravel Forms & HTML package : (https://laravelcollective.com/docs/5.4/html)
+//Install laravel Forms & HTML package : 
+https://laravelcollective.com/docs/5.4/html
 
+//Admin theme : 
+http://demo.sleepingowladmin.ru/admin/
 
-//Laravel
-
-
-//Admin theme : http://demo.sleepingowladmin.ru/admin/
-
-//Run laravel with port : php artisan serve --port=9090
+//Run laravel with port : 
+php artisan serve --port=9090
 
 \DB::enableQueryLog();
 dd(\DB::getQueryLog());
-
 
 //Truncate : 
 php artisan tinker
 
 DB::table('table_user')->truncate();
 
+//Passport permission : 
+sudo chown www-data:www-data storage/oauth-*.key
 
-//Passport permission : <i> sudo chown www-data:www-data storage/oauth-*.key </i>
-
-//generate migrations from database: https://github.com/Xethron/migrations-generator
+//generate migrations from database: 
+https://github.com/Xethron/migrations-generator
 
 
 //Temp : 
@@ -81,15 +81,14 @@ Schema::table('users', function($table){
 
 //Once you've finished your migration, save it and run it using php artisan migrate and your table will be updated.
 
-//Documentation: http://laravel.com/docs/schema#adding-columns
+//Documentation: 
+http://laravel.com/docs/schema#adding-columns
 
-//Debug bar : https://www.youtube.com/watch?v=nV6qaLXH9vU
-
-
+//Debug bar : 
+https://www.youtube.com/watch?v=nV6qaLXH9vU
 
 //Clear cache :  >_ 
 php artisan cache:clear
-
 
 //Empty log file :  >_ 
 echo "" > logs/laravel.log 
@@ -98,19 +97,16 @@ echo "" > logs/laravel.log
 php artisan make:controller PeopleController --resource
 php artisan make:controller PhotoController --resource --model=Photo
 
-
 //Get route list :  >_  
 php artisan route:list
 
 //Bind route : 
-
 Route::bind('songs', function($slug) {    
     return App\Song::whereSlug($slug)->first();
 });
 
 
 //only method allow in controller 
-
 Route::resource('songs','SongsController',[
 'only' => [
 'index','show','edit','update'
@@ -127,14 +123,12 @@ Route::resource('songs','SongsController',[
 ]);
 
 //Create route alias using resource :
-
 Route::resource('songs', 'SongsController', [
         'as' => 'songs'
 ]);
 
 
 //Form model url :
-
 {!! Form::model($song,['url'=>'songs/'.$song->slug,'method'=>'PATCH']) !!}
 
 {!! Form::model($song,['route'=>['song_update',$song->slug],'method'=>'PATCH']) !!}
@@ -142,9 +136,7 @@ Route::resource('songs', 'SongsController', [
 
 return redirect()->back()->withErrors(["Please enter animation name"]);
 
-
 //Get all Error message : 
-
 <ul>
     @foreach($errors->all() as $error)
     <li>{{ $error }}</li>
@@ -174,14 +166,11 @@ if (isset($rules['avatar'])) {
 //************************************ Process in laravel *************************************************************
 
 //Process in Laravel:
-
 $process = new \Symfony\Component\Process\Process('/usr/bin/php ../artisan senduserlogemail:run 1 2 3 >>/dev/null 2>&1');
 $process->start();
 
 
-
 // /var/www/html/projectfolder/app/Console/Commands/SendUserLogEmail.php
-
 
 <?php
 namespace App\Console\Commands;
@@ -204,16 +193,13 @@ class SendUserLogEmail extends Command {
 }
 
 
-
 // /var/www/html/projectfolder/app/Console/Kernel.php
-
 protected $commands = [
 	Commands\SendUserLogEmail::class,
 ];
 
 
 //*************************** END ************************************
-
 
 //Laravel Glide
 
@@ -236,8 +222,7 @@ Route::get('/loadimage/{type}/{id}/{width}/{height}/{crop}/{name}', function($ty
 });
 
 
-//Laravel mail from local
-
+//Send mail from localhost in laravel
 //.env
 
 MAIL_DRIVER=smtp
@@ -246,7 +231,6 @@ MAIL_PORT=587
 MAIL_USERNAME=abc@gmail.com
 MAIL_PASSWORD=test
 MAIL_ENCRYPTION=tls
-
 
 //SENDGRID CREDS:
 
@@ -319,13 +303,10 @@ use Mail;
 </div>
 </html>
 
-
 //Laravel migrations
-
 
 //Create new table : 
 php artisan make:migration create_oauth_access_tokens_table --create="oauth_access_tokens"
-
 
 //Update migration into database : 
 php artisan migrate
@@ -341,15 +322,16 @@ php artisan migrate:refresh
 composer dump-autoload
 
 
-//Add / Update migration file : php artisan make:migration update_providers_table --table=providers
+//Update migration file : 
+php artisan make:migration update_providers_table --table=providers
 
-//run : php artisan migrate
+//run : 
+php artisan migrate
 
 //Note: data will be remain
 
 
 php artisan make:migration create_oauth_access_tokens_table --create="oauth_access_tokens"
-
 
 php artisan make:model Reports -mcr
 
