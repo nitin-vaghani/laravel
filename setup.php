@@ -1,111 +1,115 @@
-# How-to-setup-fresh-laravel
-Setup fresh laravel in ubuntu
+<?php
+// How-to-setup-fresh-laravel
+//Setup fresh laravel in ubuntu
 
-Step 1 : Install laravel using composer
+//Install laravel using composer
 	
-	Open Terminal : >_ composer create-project --prefer-dist laravel/laravel blog "5.4.*"
+composer create-project --prefer-dist laravel/laravel blog "5.7.*"
 
-Step 2: Open Terminal : >_ sudo -i 
-
-	    >_ cd /etc/apache2/sites-available/
-	    >_ cp 000-default.conf blog.conf
-	    >_ copy and paste this text 
+//Open Terminal : >_ 
+sudo -i 
+cd /etc/apache2/sites-available/
+cp 000-default.conf blog.conf
+copy and paste this text 
 		 
-			<VirtualHost *:80>
-				ServerName blog.co
-				ServerAdmin webmaster@localhost
-				DocumentRoot /var/www/html/blog/public
-				ErrorLog ${APACHE_LOG_DIR}/error.log
-				CustomLog ${APACHE_LOG_DIR}/access.log combined
+<VirtualHost *:80>
+	ServerName blog.co
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/html/blog/public
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-				<Directory /var/www/html/blog>
-					Options All
-				        AllowOverride All
-					Order allow,deny
-				        Allow from all
-				</Directory>
-			</VirtualHost>
+	<Directory /var/www/html/blog>
+		Options All
+		AllowOverride All
+		Order allow,deny
+		Allow from all
+	</Directory>
+</VirtualHost>
 
-		 5. Save and close.
-		 6. >_ a2ensite blog.conf
-		 7. >_ service apache2 restart
-		 8. >_ gedit cd /etc/hosts
-			
-			Register your blog.co in hosts file
+ // Save and close.
+ a2ensite blog.conf
+ service apache2 restart
+ gedit cd /etc/hosts
 
-			Add this line : 127.0.0.1 	blog.co
-			
-		9. Go to browser and hit : http://blog.co
+//Register your blog.co in hosts file
 
+//Add this line : 127.0.0.1 	blog.co
 
-Step 2: setting up .env file with database credentials
-
-Step 3: >_ php artisan migrate
-
-Step 4: Install laravel Forms & HTML package : (https://laravelcollective.com/docs/5.4/html)
+//Go to browser and hit : http://blog.co
 
 
-#Laravel
+//setting up .env file with database credentials
+
+php artisan migrate
+
+//Install laravel Forms & HTML package : (https://laravelcollective.com/docs/5.4/html)
 
 
-Admin theme : http://demo.sleepingowladmin.ru/admin/
-
-Run laravel with port : php artisan serve --port=9090
+//Laravel
 
 
+//Admin theme : http://demo.sleepingowladmin.ru/admin/
+
+//Run laravel with port : php artisan serve --port=9090
 
 \DB::enableQueryLog();
 dd(\DB::getQueryLog());
 
 
-Truncate : 
-> php artisan tinker
+//Truncate : 
+php artisan tinker
 
 DB::table('table_user')->truncate();
 
 
-Passport permission : <i> sudo chown www-data:www-data storage/oauth-*.key </i>
+//Passport permission : <i> sudo chown www-data:www-data storage/oauth-*.key </i>
 
-generate migrations from database: https://github.com/Xethron/migrations-generator
+//generate migrations from database: https://github.com/Xethron/migrations-generator
 
 
-Temp : php artisan migrate --path=database/migrations/temp
+//Temp : 
+php artisan migrate --path=database/migrations/temp
 
-           php artisan migrate --path=/database/migrations/2016_10_25_120847_create_kafo_announcments_table
+php artisan migrate --path=/database/migrations/2016_10_25_120847_create_kafo_announcments_table
 
-Then use the table command as follows (if you're using MySQL!):
+//Then use the table command as follows (if you're using MySQL!):
 
 Schema::table('users', function($table){
     $table->string('phone_nr')->after('id');
 });
 
-Once you've finished your migration, save it and run it using php artisan migrate and your table will be updated.
+//Once you've finished your migration, save it and run it using php artisan migrate and your table will be updated.
 
-Documentation: http://laravel.com/docs/schema#adding-columns
+//Documentation: http://laravel.com/docs/schema#adding-columns
 
-Debug bar : https://www.youtube.com/watch?v=nV6qaLXH9vU
-
-
-
-Clear cache :  >_ php artisan cache:clear
+//Debug bar : https://www.youtube.com/watch?v=nV6qaLXH9vU
 
 
-Empty log file :  >_ echo "" > logs/laravel.log 
 
-Create controller with resource : >_ php artisan make:controller PeopleController --resource
-                                  >_  php artisan make:controller PhotoController --resource --model=Photo
+//Clear cache :  >_ 
+php artisan cache:clear
 
 
-Get route list :  >_  php artisan route:list
+//Empty log file :  >_ 
+echo "" > logs/laravel.log 
 
-Bind route : 
+//Create controller with resource : >_ 
+php artisan make:controller PeopleController --resource
+php artisan make:controller PhotoController --resource --model=Photo
+
+
+//Get route list :  >_  
+php artisan route:list
+
+//Bind route : 
 
 Route::bind('songs', function($slug) {    
     return App\Song::whereSlug($slug)->first();
 });
 
 
-only method allow in controller 
+//only method allow in controller 
 
 Route::resource('songs','SongsController',[
 'only' => [
@@ -114,7 +118,7 @@ Route::resource('songs','SongsController',[
 ]);
 
 
-except method in controller 
+//except method in controller 
 
 Route::resource('songs','SongsController',[
 'except' => [
@@ -122,15 +126,14 @@ Route::resource('songs','SongsController',[
 ]
 ]);
 
-Create route alias using resource :
+//Create route alias using resource :
 
-
-  Route::resource('songs', 'SongsController', [
+Route::resource('songs', 'SongsController', [
         'as' => 'songs'
-    ]);
+]);
 
 
-Form model url :
+//Form model url :
 
 {!! Form::model($song,['url'=>'songs/'.$song->slug,'method'=>'PATCH']) !!}
 
@@ -140,7 +143,7 @@ Form model url :
 return redirect()->back()->withErrors(["Please enter animation name"]);
 
 
-Get all Error message : 
+//Get all Error message : 
 
 <ul>
     @foreach($errors->all() as $error)
@@ -155,31 +158,32 @@ Get all Error message :
 @endif
 
 
-Get current route Name : http://stackoverflow.com/questions/30046691/how-to-get-current-route-name-in-laravel-5
+//Get current route Name : http://stackoverflow.com/questions/30046691/how-to-get-current-route-name-in-laravel-5
 
-Set rule : 
+//Set rule : 
 
-        if (isset($rules['avatar'])) {
-            $rules["avatar"] = array(
-                0 => "image",
-                1 => "mimes:jpeg,png,jpg,gif,svg",
-                2 => "max:2024"
-            );
-        }
+if (isset($rules['avatar'])) {
+    $rules["avatar"] = array(
+	0 => "image",
+	1 => "mimes:jpeg,png,jpg,gif,svg",
+	2 => "max:2024"
+    );
+}
 	
-/************************************ Process in laravel *************************************************************/
+	
+//************************************ Process in laravel *************************************************************
 
-Process in Laravel:
+//Process in Laravel:
 
 $process = new \Symfony\Component\Process\Process('/usr/bin/php ../artisan senduserlogemail:run 1 2 3 >>/dev/null 2>&1');
 $process->start();
 
 
 
-/var/www/html/projectfolder/app/Console/Commands/SendUserLogEmail.php
+// /var/www/html/projectfolder/app/Console/Commands/SendUserLogEmail.php
 
 
-<php>
+<?php
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -199,22 +203,19 @@ class SendUserLogEmail extends Command {
     }
 }
 
-</php>
 
 
-/var/www/html/projectfolder/app/Console/Kernel.php
+// /var/www/html/projectfolder/app/Console/Kernel.php
 
-<php>
-  protected $commands = [
-        Commands\SendUserLogEmail::class,
-    ];
-
-</php>
-
-/*************************** END ************************************/
+protected $commands = [
+	Commands\SendUserLogEmail::class,
+];
 
 
-Laravel Glide
+//*************************** END ************************************
+
+
+//Laravel Glide
 
 Route::get('/loadimage/{type}/{id}/{width}/{height}/{crop}/{name}', function($type, $id, $width, $height, $crop, $name) { 
     $server = ServerFactory::create([
@@ -235,9 +236,9 @@ Route::get('/loadimage/{type}/{id}/{width}/{height}/{crop}/{name}', function($ty
 });
 
 
-#Laravel mail from local
+//Laravel mail from local
 
-.env
+//.env
 
 MAIL_DRIVER=smtp
 MAIL_HOST=smtp.gmail.com
@@ -247,7 +248,7 @@ MAIL_PASSWORD=test
 MAIL_ENCRYPTION=tls
 
 
-SENDGRID CREDS:
+//SENDGRID CREDS:
 
 MAIL_DRIVER=smtp
 MAIL_HOST=smtp.sendgrid.net
@@ -258,7 +259,7 @@ MAIL_ENCRYPTION=tls
 MAIL_FROM_EMAIL=abc@gmail.com
 MAIL_FROM_NAME=VIN
 
-Controller
+//Controller
 
 use Mail;
     public function test_mail() {
@@ -287,7 +288,7 @@ use Mail;
     }
 
 
-View /emails/ test.blade.php
+//View /emails/ test.blade.php
 
 <!DOCTYPE html>
 <html lang="en-EN">
@@ -319,46 +320,47 @@ View /emails/ test.blade.php
 </html>
 
 
-#Laravel migrations
+//Laravel migrations
 
 
-Create new table : php artisan make:migration create_oauth_access_tokens_table --create="oauth_access_tokens"
+//Create new table : 
+php artisan make:migration create_oauth_access_tokens_table --create="oauth_access_tokens"
 
 
-Update migration into database : php artisan migrate
+//Update migration into database : 
+php artisan migrate
 
 
-Refresh migration into database :  php artisan migrate:refresh
+//Refresh migration into database :  
+php artisan migrate:refresh
 
 
-Create a new migration using php artisan migrate:make update_users_table.
+//Create a new migration using php artisan migrate:make update_users_table.
+
+//Composer dump if autoload error : 
+composer dump-autoload
 
 
-Composer dump if autoload error : composer dump-autoload
+//Add / Update migration file : php artisan make:migration update_providers_table --table=providers
 
+//run : php artisan migrate
 
-Add / Update migration file : php artisan make:migration update_providers_table --table=providers
-
-run : php artisan migrate
-
-Note: data will be remain
+//Note: data will be remain
 
 
 php artisan make:migration create_oauth_access_tokens_table --create="oauth_access_tokens"
 
 
-
 php artisan make:model Reports -mcr
-
 
 php artisan make:model VitalSignatureFollowUp -m
 
+//if you run php artisan make:model --help you can see all the available options
 
-if you run php artisan make:model --help you can see all the available options
-
-
+/*
     -m, --migration Create a new migration file for the model.
     
     -c, --controller Create a new controller for the model.
     
     -r, --resource Indicates if the generated controller should be a resource controller
+    */
