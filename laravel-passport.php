@@ -1,27 +1,29 @@
-Laravel Passport
+<?php
 
-Laravel 5.7 - Create REST API with authentication using Passport Tutorial
+//Laravel Passport
 
-Step 1: Install Laravel 5.7
+//Laravel 5.7 - Create REST API with authentication using Passport Tutorial
+
+//Step 1: Install Laravel 5.7
 
 composer create-project --prefer-dist laravel/laravel blog
 
 
-Step 2: Install Passport
+//Step 2: Install Passport
 
 composer require laravel/passport
 
 
-After successfully install package, we require to get default migration for create new passport tables in our database. so let's run bellow command.
+//After successfully install package, we require to get default migration for create new passport tables in our database. so let's run bellow command.
 
 php artisan migrate
 
-Next, we need to install passport using command, Using passport:install command, it will create token keys for security. So let's run bellow command:
+//Next, we need to install passport using command, Using passport:install command, it will create token keys for security. So let's run bellow command:
 
 php artisan passport:install
 
 
-=============== SAVE BELOW DETAILS ================
+/*=============== SAVE BELOW DETAILS ================
 user@developer:/var/www/html/blog$ php artisan passport:install
 Encryption keys generated successfully.
 Personal access client created successfully.
@@ -31,33 +33,31 @@ Password grant client created successfully.
 Client ID: 2
 Client secret: nUSKLORdFfvD4EQoAAAvJWiN9FUO9BeLFGqSBTCo
 
-=============== ======== ================
+=============== ======== ================*/
 
 
 
-After successfully install package, open config/app.php file and add service provider.
+//After successfully install package, open config/app.php file and add service provider.
 
-config/app.php
+//config/app.php
 
 'providers' =>[
-
-Laravel\Passport\PassportServiceProvider::class,
-
+	Laravel\Passport\PassportServiceProvider::class,
 ],
 
-Step 3: Passport Configuration
+//Step 3: Passport Configuration
 
-In this step, we have to configuration on three place model, service provider and auth config file. So you have to just following change on that file.
+//In this step, we have to configuration on three place model, service provider and auth config file. So you have to just following change on that file.
 
-In User model we added HasApiTokens class of Passport,
+//In User model we added HasApiTokens class of Passport,
 
-In AuthServiceProvider we added "Passport::routes()",
+//In AuthServiceProvider we added "Passport::routes()",
 
-In auth.php, we added api auth configuration.
+//In auth.php, we added api auth configuration.
 
-Follow below given steps : 
+//Follow below given steps : 
 
-app/User.php
+//app/User.php
 
 <?php
 
@@ -94,7 +94,7 @@ class User extends Authenticatable {
 }
 
 
-app/Providers/AuthServiceProvider.php
+//app/Providers/AuthServiceProvider.php
 
 
 <?php
@@ -129,38 +129,27 @@ class AuthServiceProvider extends ServiceProvider {
 }
 
 
-config/auth.php
+//config/auth.php
 
 <?php
 
 
 return [
 
-    .....
-
     'guards' => [
-
         'web' => [
-
             'driver' => 'session',
-
             'provider' => 'users',
-
         ],
-
         'api' => [
-
             'driver' => 'passport', // CHANGE 'token' To 'passport'
-
             'provider' => 'users',
-
         ],
-
     ],
 ]
 
 
-Step 4: Add Product Table and Model
+//Step 4: Add Product Table and Model
 
 php artisan make:migration create_products_table
 
@@ -202,9 +191,9 @@ class CreateProductsTable extends Migration {
 php artisan migrate
 
 
-After create "products" table you should create Product model for products, so first create file in this path app/Product.php and put bellow content in Product.php file:
+//After create "products" table you should create Product model for products, so first create file in this path app/Product.php and put bellow content in Product.php file:
 
-app/Product.php
+//app/Product.php
 
 <?php
 
@@ -222,21 +211,23 @@ class Product extends Model {
 
 
 
-Step 5: Create API Routes
+//Step 5: Create API Routes
 
 
-routes/api.php
+//routes/api.php
 
+Route::post('login', 'API\RegisterController@login');
 Route::post('register', 'API\RegisterController@register');
 
-Route::middleware('auth:api')->group( function () {
-	Route::resource('products', 'API\ProductController');
+Route::middleware('auth:api')->group(function () {
+    Route::resource('products', 'API\ProductController');
+    Route::post('user_details', 'API\RegisterController@details');
 });
 
 
-Step 6: Create Controller Files
+//Step 6: Create Controller Files
 
-app/Http/Controllers/API/BaseController.php
+//app/Http/Controllers/API/BaseController.php
 
 <?php
 
@@ -280,7 +271,7 @@ class BaseController extends Controller {
 }
 
 
-app/Http/Controllers/API/ProductController.php
+//app/Http/Controllers/API/ProductController.php
 
 
 <?php
@@ -368,8 +359,7 @@ class ProductController extends BaseController {
 }
 
 
-app/Http/Controllers/API/RegisterController.php
-
+//app/Http/Controllers/API/RegisterController.php
 <?php
 
 namespace App\Http\Controllers\API;
@@ -382,39 +372,68 @@ use Validator;
 
 class RegisterController extends BaseController {
 
+    public $successStatus = 200;
+
     /**
-     * Register api
-     * @return \Illuminate\Http\Response
+     * login api 
+     * 
+     * @return \Illuminate\Http\Response 
+     */
+    public function login() {
+        if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+            $user = Auth::user();
+            $success['token'] = $user->createToken('MyApp')->accessToken;
+            return response()->json(['success' => $success], $this->successStatus);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
+    }
+
+    /**
+     * Register api 
+     * 
+     * @return \Illuminate\Http\Response 
      */
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
                     'name' => 'required',
-                    'email' => 'required|email',
+                    'email' => 'required|email|unique:users',
                     'password' => 'required',
                     'c_password' => 'required|same:password',
         ]);
+
+
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return response()->json(['error' => $validator->errors()], 401);
         }
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['name'] = $user->name;
-        return $this->sendResponse($success, 'User register successfully.');
+        return response()->json(['success' => $success], $this->successStatus);
+    }
+
+    /**
+     * details api 
+     * 
+     * @return \Illuminate\Http\Response 
+     */
+    public function details() {
+        $user = Auth::user();
+        return response()->json(['success' => $user], $this->successStatus);
     }
 
 }
 
-make sure in details api we will use following headers as listed bellow:
-
+//make sure in details api we will use following headers as listed bellow:
 
 'headers' => [
     'Accept' => 'application/json',
     'Authorization' => 'Bearer '.$accessToken,
 ]
 
-Check this postman collection : https://www.getpostman.com/collections/896f74fb7c0bb5a714e6
+//Check this postman collection : https://www.getpostman.com/collections/896f74fb7c0bb5a714e6
 
 
-eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjYyMTg0MDNlZTg5NjQ4YTE2NzM2ZmJhNmYyYTZhMjM5Njc3N2MxMGQyNzFjNWEyYzIyYmM3YjZlMjIzZGYxOTJiYjdiZGFkOGY3Njk1YjNlIn0.eyJhdWQiOiIxIiwianRpIjoiNjIxODQwM2VlODk2NDhhMTY3MzZmYmE2ZjJhNmEyMzk2Nzc3YzEwZDI3MWM1YTJjMjJiYzdiNmUyMjNkZjE5MmJiN2JkYWQ4Zjc2OTViM2UiLCJpYXQiOjE1NDkwMTkwNjQsIm5iZiI6MTU0OTAxOTA2NCwiZXhwIjoxNTgwNTU1MDY0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.PgCPeHCpcfgf3m2hV9W-mJ_rTnatVYkqIqs9B1lkaTih9SacHT0dFN2r5pBYO-JZJZl5f9VnGxLXB3u8qclZ51L4PRnPX-cLcvyoWkVsXOJdRZv2sf8quNwlWJkijn_T0MmxAEn6M6Y8YgBdtoivVd-gOmEgfHNl4c9yvjwiwTx3YEQ3AWthbdgsk6T1XzHsvfxF7ApShtI1roXB56JGn8XLVSGzNQ4LadAjDLD04L6p10ESVgnl30alfO-EwN80eiTFg9vqsKmdsqjB4TfXxI2kGH1Y42e-oiqwAQiZXKtcDPqxmG-HL5PBnGcVjYuTuAvUtne5WqNrnvlRJu0vOoh8wY1jDzU62xhPV-BoBLceQtDQL0zYn3pCamI4csjptS74pyTgErbdRd6HhLmG9pjmETWQjKCFb3pf9INcNtopagCNLJ2vRldxhvDJYcqVhCz4DlG25HzWS7bJBT6Hon-VjgXTfJvgs8qbBw4KT5rox-1mN2QEOkxwTYp1fnFVasODp_EKMmQGKVtArw0hxEWtGqZCTadpVkbMYZLaNt_E9HiT75vrAXl4tCZBtvL4ZXl7R9F8LlW2A4Z_616WIGstO8dx3XTbHQR2ta6LslYxCoxyj5a7Ws68OAM0KWEPU-bDA05kPkNt7OIimlP0skzsT6RnDlJ9Usf4GELqFNg
+//eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjYyMTg0MDNlZTg5NjQ4YTE2NzM2ZmJhNmYyYTZhMjM5Njc3N2MxMGQyNzFjNWEyYzIyYmM3YjZlMjIzZGYxOTJiYjdiZGFkOGY3Njk1YjNlIn0.eyJhdWQiOiIxIiwianRpIjoiNjIxODQwM2VlODk2NDhhMTY3MzZmYmE2ZjJhNmEyMzk2Nzc3YzEwZDI3MWM1YTJjMjJiYzdiNmUyMjNkZjE5MmJiN2JkYWQ4Zjc2OTViM2UiLCJpYXQiOjE1NDkwMTkwNjQsIm5iZiI6MTU0OTAxOTA2NCwiZXhwIjoxNTgwNTU1MDY0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.PgCPeHCpcfgf3m2hV9W-mJ_rTnatVYkqIqs9B1lkaTih9SacHT0dFN2r5pBYO-JZJZl5f9VnGxLXB3u8qclZ51L4PRnPX-cLcvyoWkVsXOJdRZv2sf8quNwlWJkijn_T0MmxAEn6M6Y8YgBdtoivVd-gOmEgfHNl4c9yvjwiwTx3YEQ3AWthbdgsk6T1XzHsvfxF7ApShtI1roXB56JGn8XLVSGzNQ4LadAjDLD04L6p10ESVgnl30alfO-EwN80eiTFg9vqsKmdsqjB4TfXxI2kGH1Y42e-oiqwAQiZXKtcDPqxmG-HL5PBnGcVjYuTuAvUtne5WqNrnvlRJu0vOoh8wY1jDzU62xhPV-BoBLceQtDQL0zYn3pCamI4csjptS74pyTgErbdRd6HhLmG9pjmETWQjKCFb3pf9INcNtopagCNLJ2vRldxhvDJYcqVhCz4DlG25HzWS7bJBT6Hon-VjgXTfJvgs8qbBw4KT5rox-1mN2QEOkxwTYp1fnFVasODp_EKMmQGKVtArw0hxEWtGqZCTadpVkbMYZLaNt_E9HiT75vrAXl4tCZBtvL4ZXl7R9F8LlW2A4Z_616WIGstO8dx3XTbHQR2ta6LslYxCoxyj5a7Ws68OAM0KWEPU-bDA05kPkNt7OIimlP0skzsT6RnDlJ9Usf4GELqFNg
