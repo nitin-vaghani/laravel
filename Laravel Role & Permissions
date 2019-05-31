@@ -1,0 +1,25 @@
+Laravel Role & Permissions
+
+1. https://thewebtier.com/laravel/understanding-roles-permissions-laravel/
+2. https://packagist.org/packages/spatie/laravel-permission
+3. https://itsolutionstuff.com/post/laravel-56-user-roles-and-permissions-acl-using-spatie-tutorialexample.html
+
+4. https://github.com/spatie/laravel-permission
+5. https://github.com/caleboki/acl
+
+php artisan permission:cache-reset
+
+
+php artisan cache:forget spatie.permission.cache
+
+
+ubeer@example.net
+Password is "secret"
++
+
+
+
+php artisan permission:create-role roles web
+
+
+php artisan permission:create-permission "role-create" web
