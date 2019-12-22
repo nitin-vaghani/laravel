@@ -1,7 +1,7 @@
 # How to install Laravel globally in Ubuntu
-===================================================================
+#===================================================================
 
-Open your terminal using `Ctrl+Alt+T` and type the following commands
+#Open your terminal using `Ctrl+Alt+T` and type the following commands
 
 ## Step 1: Install Laravel
 ```bash
@@ -28,9 +28,9 @@ composer install
 ```bash
 php artisan serve
 ```
-Open a web browser and visit `localhost:8000` to see the laravel welcome page
+#Open a web browser and visit `localhost:8000` to see the laravel welcome page
 
 ## Step 6: Stop server
-Terminate php server in terminal by pressing `Ctrl+C`	
+#Terminate php server in terminal by pressing `Ctrl+C`	
 
-Thus you have successfully installed laravel globally.
+#Thus you have successfully installed laravel globally.
