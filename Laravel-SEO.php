@@ -98,7 +98,7 @@ class SeoManagerController extends Controller {
 
 }
 
-STEP 2: Create SeoManager Model
+#STEP 2: Create SeoManager Model
 
 <?php
 
