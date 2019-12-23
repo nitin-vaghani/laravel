@@ -1,8 +1,6 @@
 <?php
 #How to create dynamic SEO using Laravel
 
-#See Database in "seo_manager.sql"
-
 #STEP 1: Create SeoManagerController
 
 namespace App\Http\Controllers;
@@ -249,3 +247,58 @@ $meta = App\SeoManager::find(1);
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="{{$meta->seo_og_site_name}}"/>
 @endif
+
+#STEP 6: Import SQL
+    
+
+--
+-- Table structure for table `seo_manager`
+--
+
+CREATE TABLE `seo_manager` (
+  `seo_id` int(3) UNSIGNED NOT NULL,
+  `seo_keywords` text COLLATE utf8mb4_unicode_ci,
+  `seo_description` text COLLATE utf8mb4_unicode_ci,
+  `seo_title` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_author` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_og_url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_og_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seo_og_image_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seo_og_title` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seo_og_site_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seo_og_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seo_created_at` datetime DEFAULT NULL,
+  `seo_updated_at` datetime DEFAULT NULL,
+  `seo_status` tinyint(2) UNSIGNED NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `seo_manager`
+--
+
+INSERT INTO `seo_manager` (`seo_id`, `seo_keywords`, `seo_description`, `seo_title`, `seo_url`, `seo_author`, `seo_og_url`, `seo_og_type`, `seo_og_image_url`, `seo_og_title`, `seo_og_site_name`, `seo_og_description`, `seo_created_at`, `seo_updated_at`, `seo_status`) VALUES
+(1, 'ttt', 'ttt', 'tt', 'http://studypractice.cott', 'ttt', 'http://studypractice.cott', 'websitett', '1576492484_30987.jpg', 'ttt', 'ttt', 'ttt', '2019-12-16 00:00:00', '2019-12-16 10:34:44', 1);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `seo_manager`
+--
+ALTER TABLE `seo_manager`
+  ADD PRIMARY KEY (`seo_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `seo_manager`
+--
+ALTER TABLE `seo_manager`
+  MODIFY `seo_id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
